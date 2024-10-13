@@ -4,17 +4,17 @@
       <h2 class="font-semibold text-xl">Coming Soon</h2>
     </div>
     <Carousel :autoplay="5000" :wrap-around="true">
-      <Slide v-for="{ id, name, date } in films" :key="id" class="h-60">
+      <Slide v-for="{ id, title, release_date } in films" :key="id" class="h-60">
         <div class="flex flex-col items-start w-full h-60">
           <div class="mb-1 h-44 w-full">
             <img
-              :src="`../../../public/img/coomingSoonFilms/${name}.jpg`"
+              :src="`../../../public/img/coomingSoonFilms/${title}.jpg`"
               alt="art"
               class="rounded-xl w-full h-full object-cover"
             />
           </div>
-          <h3 class="font-semibold text-xl">{{ name }}</h3>
-          <p class="block text-sm text-gray-100">{{ getFormattedDate(date) }}</p>
+          <h3 class="font-semibold text-xl">{{ title }}</h3>
+          <p class="block text-sm text-gray-100">{{ getFormattedDate(release_date) }}</p>
         </div>
       </Slide>
     </Carousel>
@@ -23,8 +23,6 @@
 
 <script setup>
 import 'vue3-carousel/dist/carousel.css'
-import { onMounted } from 'vue'
-import { useComingSoonFilms } from '@/stores/comingSoonFilms'
 import { Carousel, Slide, Pagination, Navigation } from 'vue3-carousel'
 import { DateTime, Duration, Info, Interval, Settings } from 'luxon'
 import ComingSoonSkeleton from '../Skeletons/ComingSoonSkeleton.vue'

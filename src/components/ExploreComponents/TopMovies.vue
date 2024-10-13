@@ -1,18 +1,36 @@
 <template>
-  <div class="container mx-auto px-7 pt-7">
-    <div class=""></div>
-    <div class="flex justify-between mb-4">
-      <h2 class="font-semibold text-xl">Top Movies</h2>
-      <button class="text-button text-sm">See more</button>
+  <div>
+    <div class="container mx-auto pl-7">
+      <SliderMovies
+        :films="getNowShowingFilms"
+        :breakPoints="breakPointsTopMovies"
+        :isRating="true"
+        :height="'h-64'"
+        :width="'w-48'"
+      ></SliderMovies>
     </div>
-  </div>
-  <div class="container mx-auto pl-7">
-    <ListMovies></ListMovies>
   </div>
 </template>
 
 <script setup>
-import ListMovies from '../ListMovies.vue'
+import { storeToRefs } from 'pinia'
+import SliderMovies from '../SliderMovies.vue'
+import { useFilms } from '@/stores/films'
+
+const filmsStore = useFilms()
+
+const { getNowShowingFilms } = storeToRefs(filmsStore)
+
+const breakPointsTopMovies = {
+  320: { itemsToShow: 1.3 },
+  350: { itemsToShow: 1.55 },
+  400: { itemsToShow: 1.8 },
+  450: { itemsToShow: 2.1 },
+  600: { itemsToShow: 3 },
+  900: { itemsToShow: 3.5 },
+  1200: { itemsToShow: 4 },
+  1600: { itemsToShow: 7 }
+}
 </script>
 
 <style scoped></style>

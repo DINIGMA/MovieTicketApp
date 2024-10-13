@@ -1,12 +1,41 @@
 <template>
   <div class="container mx-auto px-7 pt-7">
-    <UserInfo class="mb-7"></UserInfo>
-    <Search class="mb-7"></Search>
-    <div class="mb-7">
-      <ComingSoonFilms v-if="!loadingComingFilms" :films="comingFilms"></ComingSoonFilms>
-      <ComingSoonSkeleton v-else></ComingSoonSkeleton>
+    <div class="flex justify-between items-center mb-3">
+      <h2 class="text-xl font-bold">
+        Movie<br />
+        ticket App
+      </h2>
+      <div class="flex gap-3">
+        <RouterLink
+          to="/register"
+          class="py-3 px-5 rounded-xl bg-blue-400 active:bg-white active:text-black"
+          ><div>Sign Up</div></RouterLink
+        >
+        <RouterLink
+          to="/login"
+          class="py-3 px-5 rounded-xl bg-blue-400 transition active:bg-white active:text-black"
+          ><div>Sign In</div></RouterLink
+        >
+      </div>
     </div>
-    <ListCinemas class="mb-5"></ListCinemas>
+    <!-- <UserInfo class="mb-7"></UserInfo> -->
+    <Search class="mb-7" v-model="homeSearchQuery"></Search>
+    <div v-if="!filmsStore.homeSearchQuery">
+      <div class="mb-7">
+        <ComingSoonFilms v-if="!loadingFilms" :films="getUpcomingFilms"></ComingSoonFilms>
+        <ComingSoonSkeleton v-else></ComingSoonSkeleton>
+      </div>
+      <div>
+        <ListCinemas v-if="!loadingCinemas" :cinemas="cinemas" class="mb-5"></ListCinemas>
+        <ListCinemasSkeleton v-else></ListCinemasSkeleton>
+      </div>
+    </div>
+    <div v-else>
+      <div v-if="filteredFilms.length == 0 && filmsStore.homeSearchQuery">
+        <h3 class="font-semibold text-xl">No movies were found for your search</h3>
+      </div>
+      <MovieList :films="filteredFilms"></MovieList>
+    </div>
   </div>
 </template>
 
@@ -15,17 +44,33 @@ import UserInfo from '@/components/HomePageComponents/UserInfo.vue'
 import Search from '@/components/HomePageComponents/Search.vue'
 import ComingSoonFilms from '@/components/HomePageComponents/ComingSoonFilms.vue'
 import ListCinemas from '@/components/HomePageComponents/ListCinemas.vue'
-import Navigation from '@/components/Navigation.vue'
+import MovieList from '@/components/MovieList.vue'
 import ComingSoonSkeleton from '@/components/Skeletons/ComingSoonSkeleton.vue'
-import { onMounted } from 'vue'
-import { useComingSoonFilms } from '@/stores/comingSoonFilms'
+import ListCinemasSkeleton from '@/components/Skeletons/ListCinemasSkeleton.vue'
+import { computed, onMounted, ref, watch } from 'vue'
+import { useFilms } from '@/stores/films'
+import { useCinemas } from '@/stores/cinemas'
 import { storeToRefs } from 'pinia'
 
-const comingStore = useComingSoonFilms()
-const { comingFilms, loadingComingFilms } = storeToRefs(comingStore)
+const filmsStore = useFilms()
+const cinemasStore = useCinemas()
+
+const { comingFilms, loadingFilms, getUpcomingFilms, films, clearSearchQuery, homeSearchQuery } =
+  storeToRefs(filmsStore)
+
+const { cinemas, loadingCinemas } = storeToRefs(cinemasStore)
+
+const filteredFilms = computed(() => {
+  const sortedFilms = [...films.value].sort((a, b) => a.title.localeCompare(b.title))
+  if (!homeSearchQuery.value) return sortedFilms
+
+  return sortedFilms.filter((film) =>
+    film.title.toLowerCase().includes(homeSearchQuery.value.toLowerCase())
+  )
+})
 
 onMounted(async () => {
-  await comingStore.getComingSoonFilms()
+  await Promise.all([cinemasStore.getCinemas()])
 })
 </script>
 

@@ -8,11 +8,24 @@
     <input
       type="text"
       placeholder="Search your favourite movie"
+      v-model="modelValue"
+      @blur="blurFunction"
       class="bg-transparent w-full border-none focus:outline-none placeholder-gray-500"
     />
   </div>
 </template>
 
-<script setup></script>
+<script setup>
+import { useModel, defineModel } from 'vue'
+
+const modelValue = defineModel()
+
+defineProps({
+  blurFunction: {
+    type: Function,
+    default: null
+  }
+})
+</script>
 
 <style></style>

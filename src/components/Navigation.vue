@@ -27,7 +27,6 @@ import { useRoute } from 'vue-router'
 const route = useRoute()
 
 const isActive = (name) => {
-  console.log(route)
   return route.name === name
 }
 </script>
@@ -36,9 +35,9 @@ const isActive = (name) => {
 footer {
   position: sticky;
   bottom: 0;
-  color: white;
-  text-align: center;
-  padding: 10px;
+  left: 0;
+  right: 0;
+  z-index: 1000;
 }
 
 .active {

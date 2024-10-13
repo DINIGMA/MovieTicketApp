@@ -11,7 +11,10 @@ export default {
         button: '#696D74',
         buttonActive: '#54A8E5',
         'lak-100': '#696d74',
-        bgButton: '#383C43'
+        bgButton: '#383C43',
+        bgDark: '#252932',
+        textLight: '#B2B5BB',
+        accent: '#F14763'
       }
     }
   },
