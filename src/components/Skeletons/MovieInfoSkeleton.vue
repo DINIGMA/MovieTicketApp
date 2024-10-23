@@ -23,7 +23,6 @@
       <AnimatedPlaceholder width="264px" height="80px" borderRadius="6px"></AnimatedPlaceholder>
     </div>
   </div>
-  <AnimatedPlaceholder width="100%" height="57px" borderRadius="6px"></AnimatedPlaceholder>
 </template>
 
 <script setup>

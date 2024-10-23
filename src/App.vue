@@ -28,11 +28,11 @@ onMounted(async () => {
 
 <style scoped>
 .fixed-navigation {
-  margin-top: auto; /* Это заставляет навигацию оставаться внизу контейнера */
+  margin-top: auto;
 }
 .app-container {
   display: flex;
   flex-direction: column;
-  min-height: 100vh; /* Заставляет контейнер занимать всю высоту экрана */
+  min-height: 100vh;
 }
 </style>

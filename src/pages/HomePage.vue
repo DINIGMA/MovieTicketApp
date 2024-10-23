@@ -1,24 +1,6 @@
 <template>
   <div class="container mx-auto px-7 pt-7">
-    <div class="flex justify-between items-center mb-3">
-      <h2 class="text-xl font-bold">
-        Movie<br />
-        ticket App
-      </h2>
-      <div class="flex gap-3">
-        <RouterLink
-          to="/register"
-          class="py-3 px-5 rounded-xl bg-blue-400 active:bg-white active:text-black"
-          ><div>Sign Up</div></RouterLink
-        >
-        <RouterLink
-          to="/login"
-          class="py-3 px-5 rounded-xl bg-blue-400 transition active:bg-white active:text-black"
-          ><div>Sign In</div></RouterLink
-        >
-      </div>
-    </div>
-    <!-- <UserInfo class="mb-7"></UserInfo> -->
+    <UserInfo class="mb-7"></UserInfo>
     <Search class="mb-7" v-model="homeSearchQuery"></Search>
     <div v-if="!filmsStore.homeSearchQuery">
       <div class="mb-7">
@@ -47,6 +29,8 @@ import ListCinemas from '@/components/HomePageComponents/ListCinemas.vue'
 import MovieList from '@/components/MovieList.vue'
 import ComingSoonSkeleton from '@/components/Skeletons/ComingSoonSkeleton.vue'
 import ListCinemasSkeleton from '@/components/Skeletons/ListCinemasSkeleton.vue'
+import LoginIcon from '@/components/UI-components/icons/LoginIcon.vue'
+import SignUpIcon from '@/components/UI-components/icons/SignUpIcon.vue'
 import { computed, onMounted, ref, watch } from 'vue'
 import { useFilms } from '@/stores/films'
 import { useCinemas } from '@/stores/cinemas'

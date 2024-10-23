@@ -14,7 +14,9 @@ export default {
         bgButton: '#383C43',
         bgDark: '#252932',
         textLight: '#B2B5BB',
-        accent: '#F14763'
+        accent: '#F14763',
+        accentRed: '#EB5757',
+        graySlate: 'rgba(178, 181, 187, 0.5);'
       }
     }
   },

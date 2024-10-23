@@ -32,12 +32,15 @@ import AnimatedPlaceholder from './AnimatedPlaceholder.vue'
 import { Carousel, Slide, Pagination, Navigation } from 'vue3-carousel'
 
 const breakPointsTopMovies = {
-  320: { itemsToShow: 1.5 },
+  320: { itemsToShow: 1.3 },
   350: { itemsToShow: 1.55 },
-  420: { itemsToShow: 2.1 },
-  600: { itemsToShow: 3 },
+  400: { itemsToShow: 1.8 },
+  450: { itemsToShow: 2.1 },
+  520: { itemsToShow: 2.4 },
+  600: { itemsToShow: 2.9 },
+  800: { itemsToShow: 3.2 },
   900: { itemsToShow: 3.5 },
-  1200: { itemsToShow: 4 },
+  1200: { itemsToShow: 4.5 },
   1600: { itemsToShow: 7 }
 }
 </script>

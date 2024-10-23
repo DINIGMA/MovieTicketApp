@@ -28,7 +28,7 @@
       {{ item }}
     </div>
   </div>
-  <div class="mb-6">
+  <div>
     <h3 class="text-xl font-medium mb-2">Synopsis</h3>
     <div class="text-container">
       <p class="inline font-light text-sm text-lak-100 truncate1" v-if="!isExpanded">
@@ -46,13 +46,11 @@
       }}</span>
     </div>
   </div>
-  <Button :buttonText="'Book Ticket'"></Button>
 </template>
 
 <script setup>
 import { ref, computed, onMounted } from 'vue'
 import StarReating from './UI-components/StarReating.vue'
-import Button from './UI-components/Button.vue'
 
 const props = defineProps({
   movie: Object
