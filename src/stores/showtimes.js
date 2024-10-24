@@ -10,7 +10,7 @@ export const useShowtimes = defineStore('showtimes', () => {
     loadingShowtimes.value = true
     try {
       const { data } = await http.get(
-        `/showtimes?_relations=cinemas&sortBy=start_time&movie_id=${movieId}`
+        `/showtimes?_relations=cinemas,halls&sortBy=start_time&movie_id=${movieId}`
       )
       showtimes.value = data
     } catch (err) {

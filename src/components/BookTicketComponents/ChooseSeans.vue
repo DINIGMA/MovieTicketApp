@@ -1,52 +1,69 @@
 <template>
-  <div class="flex flex-col gap-4 mb-10">
-    <div>
-      <span class="block text-xs mb-2">Cinemas</span
-      ><Multiselect
-        v-model="cinema"
-        :options="cinemas"
-        label="name"
-        placeholder="Pick at least one"
-        :show-labels="false"
-      ></Multiselect>
-    </div>
-    <div class="flex gap-8">
-      <div class="w-full">
-        <span class="block text-xs mb-2">Date</span
+  <div>
+    <div class="flex flex-col gap-4 mb-10">
+      <div>
+        <span class="block text-xs mb-2">Cinemas</span
         ><Multiselect
-          v-model="date"
-          :options="availableDate"
-          placeholder=""
+          v-model="cinema"
+          :options="cinemas"
+          label="name"
+          placeholder="Pick at least one"
           :show-labels="false"
         ></Multiselect>
       </div>
-      <div class="w-full">
-        <span class="block text-xs mb-2">Time</span
-        ><Multiselect
-          v-model="time"
-          :options="availableTime"
-          placeholder=""
-          :show-labels="false"
-        ></Multiselect>
+      <div class="flex gap-8">
+        <div class="w-full">
+          <span class="block text-xs mb-2">Date</span
+          ><Multiselect
+            v-model="date"
+            :options="availableDate"
+            placeholder=""
+            :show-labels="false"
+          ></Multiselect>
+        </div>
+        <div class="w-full">
+          <span class="block text-xs mb-2">Time</span
+          ><Multiselect
+            v-model="time"
+            :options="availableTime"
+            placeholder=""
+            :show-labels="false"
+          ></Multiselect>
+        </div>
       </div>
     </div>
-  </div>
-  <div class="flex flex-col justify-center items-center mb-12">
-    <Screen></Screen>
-    <div>{{ selectedShowtimes }}</div>
-  </div>
-  <div class="flex items-center justify-between">
-    <div class="flex items-center">
-      <span class="bg-buttonActive rounded-full h-3 w-3 mr-3"></span>
-      <p class="text-xs font-regular text-textLight">Selected</p>
+    <div class="flex flex-col justify-center items-center mb-12">
+      <Screen></Screen>
+      <div class="flex flex-col gap-4 justify-center items-center" v-auto-animate>
+        <div v-for="(rows, index) in getHall" :key="index" class="flex gap-2">
+          <div
+            v-for="(seat, index) in rows"
+            :key="seat"
+            class="border border-graySlate rounded-lg cursor-pointer"
+            :class="[
+              { 'mr-4': index + 1 == rows.length / 2 },
+              { booked: checkBooked(seat) },
+              { selected: checkSelectedSeat(seat) != -1 }
+            ]"
+            style="width: 30px; height: 30px"
+            @click="selectSeat(seat)"
+          ></div>
+        </div>
+      </div>
     </div>
-    <div class="flex items-center">
-      <span class="bg-accentRed rounded-full h-3 w-3 mr-3"></span>
-      <p class="text-xs font-regular text-textLight">Reserved</p>
-    </div>
-    <div class="flex items-center">
-      <span class="border border-graySlate rounded-full h-3 w-3 mr-3"></span>
-      <p class="text-xs font-regular text-textLight">Available</p>
+    <div class="flex items-center justify-between">
+      <div class="flex items-center">
+        <span class="bg-buttonActive rounded-full h-3 w-3 mr-3"></span>
+        <p class="text-xs font-regular text-textLight">Selected</p>
+      </div>
+      <div class="flex items-center">
+        <span class="bg-accentRed rounded-full h-3 w-3 mr-3"></span>
+        <p class="text-xs font-regular text-textLight">Reserved</p>
+      </div>
+      <div class="flex items-center">
+        <span class="border border-graySlate rounded-full h-3 w-3 mr-3"></span>
+        <p class="text-xs font-regular text-textLight">Available</p>
+      </div>
     </div>
   </div>
 </template>
@@ -66,9 +83,13 @@ const props = defineProps({
   id: String
 })
 
+const emits = defineEmits(['updateSeats', 'updateShowtimes'])
+
 const cinema = ref('')
 const date = ref('')
 const time = ref('')
+
+const selectedSeat = ref([])
 
 const cinemas = computed(() => {
   if (showtimes.value) {
@@ -106,8 +127,6 @@ const selectedShowtimes = computed(() => {
     const selectedDateTime = DateTime.fromFormat(date.value + ' ' + time.value, 'dd MMM yyyy HH:mm')
     const selected = showtimes.value.find((item) => {
       const showtimeDate = DateTime.fromISO(item.start_time)
-      console.log(item.cinema.name)
-      console.log(showtimeDate.toISO())
       return (
         item.cinema.name == cinema.value.name && showtimeDate.toISO() === selectedDateTime.toISO()
       )
@@ -117,6 +136,52 @@ const selectedShowtimes = computed(() => {
   return null
 })
 
+const getHall = computed(() => {
+  if (selectedShowtimes.value) {
+    const rows = []
+    selectedShowtimes.value.hall.availableSeats.forEach((item) => {
+      const rowIndex = item.row - 1
+      if (!rows[rowIndex]) {
+        rows[rowIndex] = []
+      }
+      rows[rowIndex].push(item)
+    })
+    return rows
+  }
+  return 0
+})
+
+const getBookedSeats = computed(() => {
+  if (selectedShowtimes.value) {
+    return selectedShowtimes.value.bookedSeats
+  }
+  return null
+})
+
+const checkBooked = (seat) => {
+  const result = getBookedSeats.value.find(
+    (item) => item.row == seat.row && item.number == seat.number
+  )
+  return result ? true : false
+}
+
+const checkSelectedSeat = (seat) => {
+  const findSeat = selectedSeat.value.findIndex((item) => item.number == seat.number)
+  return findSeat
+}
+
+const selectSeat = (seat) => {
+  if (!checkBooked(seat)) {
+    const index = checkSelectedSeat(seat)
+    if (index != -1) {
+      selectedSeat.value.splice(index, 1)
+    } else {
+      selectedSeat.value.push(seat)
+    }
+    emits('updateSeats', selectedSeat.value)
+  }
+}
+
 watch([cinema, availableDate], () => {
   date.value = ''
   time.value = ''
@@ -124,6 +189,12 @@ watch([cinema, availableDate], () => {
 
 watch(date, () => {
   time.value = ''
+})
+
+watch(selectedShowtimes, () => {
+  emits('updateShowtimes', selectedShowtimes.value)
+  emits('updateSeats', [])
+  selectedSeat.value = []
 })
 
 onMounted(async () => {
@@ -185,5 +256,15 @@ onMounted(async () => {
   padding: 0;
   margin: 0;
   font-size: 14px;
+}
+
+.booked {
+  background: #eb5757;
+  border: none;
+  cursor: not-allowed;
+}
+.selected {
+  background: #54a8e5;
+  border: none;
 }
 </style>
