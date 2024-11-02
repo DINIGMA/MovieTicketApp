@@ -12,10 +12,13 @@
   },
   "dependencies": {
     "@formkit/auto-animate": "^0.8.2",
+    "@vuelidate/core": "^2.0.3",
+    "@vuelidate/validators": "^2.0.4",
     "axios": "^1.7.7",
     "luxon": "^3.5.0",
     "pinia": "^2.1.7",
     "vue": "^3.4.29",
+    "vue-3-mask": "^0.0.1-alpha",
     "vue-multiselect": "^3.1.0",
     "vue-router": "^4.3.3",
     "vue3-carousel": "^0.3.4"

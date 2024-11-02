@@ -50,8 +50,11 @@
           ></div>
         </div>
       </div>
+      <div v-if="!selectedShowtimes" class="px-2 py-16 px-4">
+        Select the cinema and the time of the session
+      </div>
     </div>
-    <div class="flex items-center justify-between">
+    <div class="mb-11 flex items-center justify-between">
       <div class="flex items-center">
         <span class="bg-buttonActive rounded-full h-3 w-3 mr-3"></span>
         <p class="text-xs font-regular text-textLight">Selected</p>
@@ -65,6 +68,11 @@
         <p class="text-xs font-regular text-textLight">Available</p>
       </div>
     </div>
+    <Button
+      :class="{ disabled: selectedSeat.length == 0 || !selectedShowtimes }"
+      :buttonText="'Checkout'"
+      @click="emits('goPayment')"
+    ></Button>
   </div>
 </template>
 
@@ -72,9 +80,12 @@
 import { computed, onMounted, ref, watch } from 'vue'
 import Multiselect from 'vue-multiselect'
 import Screen from '../UI-components/icons/Screen.vue'
+import Button from '../UI-components/Button.vue'
 import { useShowtimes } from '@/stores/showtimes'
 import { storeToRefs } from 'pinia'
 import { DateTime } from 'luxon'
+// import useVuelidate from '@vuelidate/core'
+// import { required, email, minLength, numeric } from '@vuelidate/validators'
 
 const showtimesStore = useShowtimes()
 const { showtimes } = storeToRefs(showtimesStore)
@@ -83,13 +94,28 @@ const props = defineProps({
   id: String
 })
 
-const emits = defineEmits(['updateSeats', 'updateShowtimes'])
+const emits = defineEmits(['updateSeats', 'updateShowtimes', 'goPayment'])
 
-const cinema = ref('')
+const cinema = ref(null)
 const date = ref('')
 const time = ref('')
-
 const selectedSeat = ref([])
+
+// Validation
+
+// const seansInfo = ref({
+//   cinema: '',
+//   date: '',
+//   time: '',
+//   selectedSeat: []
+// })
+
+// const validationRules = {
+//   cinema: { required },
+//   date: { required, email },
+//   time: { required, minLength: minLength(17) },
+//   selectedSeat: {}
+// }
 
 const cinemas = computed(() => {
   if (showtimes.value) {
@@ -212,7 +238,7 @@ onMounted(async () => {
 .multiselect__tags {
   min-height: 48px;
   display: block;
-  padding: 13px 40px 13px 24px;
+  padding: 16px 40px 16px 24px;
   border-radius: 10px;
   border: 1px solid rgba(178, 181, 187, 0.5);
   background: transparent;
@@ -266,5 +292,9 @@ onMounted(async () => {
 .selected {
   background: #54a8e5;
   border: none;
+}
+
+.disabled {
+  opacity: 0.5;
 }
 </style>

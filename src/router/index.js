@@ -1,4 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
+
+//pages
 import HomePage from '@/pages/HomePage.vue'
 import ExplorePage from '@/pages/ExplorePage.vue'
 import FavoritsPage from '@/pages/FavoritsPage.vue'
@@ -13,6 +15,7 @@ import { storeToRefs } from 'pinia'
 
 //book
 import BookTicket from '@/pages/BookTicket.vue'
+import Checkout from '@/pages/Checkout.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -81,10 +84,19 @@ const router = createRouter({
     {
       path: '/book-ticket/:id',
       props: true,
-      name: '/book-ticket',
+      name: 'book-ticket',
       component: BookTicket,
       meta: {
-        title: 'book',
+        title: 'booking',
+        requiresAuth: true
+      }
+    },
+    {
+      path: '/book-ticket/checkout',
+      name: 'checkoutTicket',
+      component: Checkout,
+      meta: {
+        title: 'checkout',
         requiresAuth: true
       }
     }

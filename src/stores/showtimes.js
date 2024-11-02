@@ -6,6 +6,9 @@ export const useShowtimes = defineStore('showtimes', () => {
   const showtimes = ref([])
   const loadingShowtimes = ref(false)
 
+  const selectedShowtime = ref()
+  const selectedSeats = ref([])
+
   const getShowtimesMovie = async (movieId) => {
     loadingShowtimes.value = true
     try {
@@ -20,8 +23,20 @@ export const useShowtimes = defineStore('showtimes', () => {
     }
   }
 
+  const selectShowtime = (showtime) => {
+    selectedShowtime.value = showtime
+  }
+
+  const selectSeats = (seats) => {
+    selectedSeats.value = seats
+  }
+
   return {
     showtimes,
-    getShowtimesMovie
+    selectedShowtime,
+    selectedSeats,
+    getShowtimesMovie,
+    selectShowtime,
+    selectSeats
   }
 })

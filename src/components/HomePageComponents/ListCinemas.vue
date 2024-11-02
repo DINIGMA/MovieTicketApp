@@ -11,7 +11,12 @@
         :key="id"
       >
         <div class="flex items-center gap-3">
-          <img :src="`../../../public/img/cinemas/${name}.jpg`" :alt="name" class="rounded-xl" />
+          <img
+            :src="`../../../public/img/cinemas/${name}.jpg`"
+            :alt="name"
+            class="rounded-xl object-contain"
+            style="height: 76px; width: 76px"
+          />
           <div class="flex flex-col">
             <div class="flex items-center">
               <LocationIcon></LocationIcon>
