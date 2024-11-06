@@ -8,7 +8,6 @@ export const useFavorits = defineStore('favorits', () => {
   const favoritsResponse = ref()
 
   const getUserFavorits = async () => {
-    console.log(111)
     try {
       if (userId) {
         const { data } = await http.get(`/favorits?user_id=${userId}`)
@@ -24,18 +23,20 @@ export const useFavorits = defineStore('favorits', () => {
     }
   }
 
-  const addToFavorits = async (movieId) => {
+  const addToFavorits = async (movie) => {
     if (userId) {
-      if (!favorits.value.includes(movieId)) {
-        favorits.value.push(movieId)
+      const findMovie = favorits.value.find((item) => item.id == movie.id)
+      if (!findMovie) {
+        favorits.value.push(movie)
         await updateFavorits()
       }
     }
   }
 
-  const removeFromFavorits = async (movieId) => {
+  const removeFromFavorits = async (movie) => {
     if (userId) {
-      favorits.value = favorits.value.filter((id) => id != movieId)
+      console.log(111)
+      favorits.value = favorits.value.filter((item) => item.id != movie.id)
       await updateFavorits()
     }
   }

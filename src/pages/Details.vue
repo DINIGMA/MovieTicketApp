@@ -41,15 +41,16 @@ const props = defineProps({
 
 const isFavorits = computed(() => {
   if (favorits.value) {
-    return favorits.value.includes(Number(props.id))
+    const findMovie = favorits.value.find((item) => item.id == Number(props.id))
+    return findMovie ? true : false
   }
 })
 
 const toggleFavorits = () => {
   if (isFavorits.value) {
-    favoritsStore.removeFromFavorits(Number(props.id))
+    favoritsStore.removeFromFavorits(selectedMovie.value)
   } else {
-    favoritsStore.addToFavorits(Number(props.id))
+    favoritsStore.addToFavorits(selectedMovie.value)
   }
 }
 
