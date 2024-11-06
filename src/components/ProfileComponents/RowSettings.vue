@@ -15,17 +15,13 @@
   <div class="mb-5">
     <h2 class="mb-3 text-xl font-semibold">Account</h2>
     <div class="flex flex-col gap-5 items-start mb-8">
-      <div class="flex justify-between items-center w-full">
+      <div
+        class="flex justify-between items-center w-full"
+        @click="router.push('/profile/personal-data')"
+      >
         <div class="flex items-center gap-4">
           <img src="../../../public/img/icons/PersonalData.png" alt="" />
           <p class="text-lg font-medium">Personal Data</p>
-        </div>
-        <NextArrow />
-      </div>
-      <div class="flex justify-between items-center w-full">
-        <div class="flex items-center gap-4">
-          <img src="../../../public/img/icons/EmailPayment.png" alt="" />
-          <p class="text-lg font-medium">Email & Payment</p>
         </div>
         <NextArrow />
       </div>
@@ -42,14 +38,10 @@
   <div>
     <h2 class="mb-3 text-xl font-semibold">Privacy & Policy</h2>
     <div class="flex flex-col gap-5 items-start">
-      <div class="flex justify-between items-center w-full">
-        <div class="flex items-center gap-4">
-          <img src="../../../public/img/icons/notification.png" alt="" />
-          <p class="text-lg font-medium">Notification</p>
-        </div>
-        <NextArrow />
-      </div>
-      <div class="flex justify-between items-center w-full">
+      <div
+        class="flex justify-between items-center w-full"
+        @click="router.push('/profile/your-tickets')"
+      >
         <div class="flex items-center gap-4">
           <img src="../../../public/img/icons/tickets.png" alt="" />
           <p class="text-lg font-medium">Your Ticket</p>

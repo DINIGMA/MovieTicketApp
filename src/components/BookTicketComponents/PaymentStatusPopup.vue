@@ -1,5 +1,7 @@
 <template>
-  <div class="fixed top-0 left-0 h-screen w-full z-50 flex justify-center items-center">
+  <div
+    class="fixed top-0 left-0 h-screen w-full z-50 flex justify-center items-center transition-all"
+  >
     <div
       class="w-full h-full fixed bg-darkSlate opacity-70 -z-10"
       @click="emits('closePopup')"
@@ -46,7 +48,7 @@ const props = defineProps({
 
 const complete = () => {
   if (props.paymentSuccess) {
-    router.push({ name: 'Home' })
+    router.push({ name: 'yourTickets' })
   } else {
     emits('closePopup')
   }

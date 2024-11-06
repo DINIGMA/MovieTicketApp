@@ -1,12 +1,11 @@
 <template>
   <div class="container mx-auto px-7 pt-7">
-    <Header :title="'Profile'"></Header>
-    <RowSettings></RowSettings>
+    <Header :title="'Personal Data'"></Header>
   </div>
 </template>
 
 <script setup>
-import RowSettings from '@/components/ProfileComponents/RowSettings.vue'
+import PrevArrow from '@/components/UI-components/icons/PrevArrow.vue'
 import Header from '@/components/Header.vue'
 import router from '@/router'
 

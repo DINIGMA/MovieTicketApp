@@ -10,7 +10,7 @@
       <router-link :to="{ name: 'Favorits' }"
         ><Favorits :fillColor="isActive('Favorits') ? '#54A8E5' : undefined"></Favorits
       ></router-link>
-      <router-link :to="{ name: 'Profile' }"
+      <router-link :to="{ name: 'profile' }"
         ><Profile :fillColor="isActive('Profile') ? '#54A8E5' : undefined"></Profile
       ></router-link>
     </div>

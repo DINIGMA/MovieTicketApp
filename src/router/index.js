@@ -17,6 +17,11 @@ import { storeToRefs } from 'pinia'
 import BookTicket from '@/pages/BookTicket.vue'
 import Checkout from '@/pages/Checkout.vue'
 
+//Profile
+import YourTickets from '@/pages/Settings/YourTickets.vue'
+import PersonalData from '@/pages/Settings/PersonalData.vue'
+import TicketDetails from '@/pages/Settings/TicketDetails.vue'
+
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
 
@@ -45,15 +50,7 @@ const router = createRouter({
         title: 'Favorits'
       }
     },
-    {
-      path: '/profile',
-      name: 'Profile',
-      component: ProfilePage,
-      meta: {
-        title: 'Profile',
-        requiresAuth: true
-      }
-    },
+
     {
       path: '/details/:id',
       props: true,
@@ -97,6 +94,43 @@ const router = createRouter({
       component: Checkout,
       meta: {
         title: 'checkout',
+        requiresAuth: true
+      }
+    },
+    {
+      path: '/profile',
+      name: 'profile',
+      component: ProfilePage,
+      meta: {
+        title: 'Profile',
+        requiresAuth: true
+      }
+    },
+    {
+      path: '/profile/personal-data',
+      name: 'personalData',
+      component: PersonalData,
+      meta: {
+        title: 'Personal Data',
+        requiresAuth: true
+      }
+    },
+    {
+      path: '/profile/your-tickets',
+      name: 'yourTickets',
+      component: YourTickets,
+      meta: {
+        title: 'Tickets',
+        requiresAuth: true
+      }
+    },
+    {
+      path: '/profile/your-tickets/:id',
+      props: true,
+      name: 'ticketDetails',
+      component: TicketDetails,
+      meta: {
+        title: 'Ticket Details',
         requiresAuth: true
       }
     }

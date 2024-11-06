@@ -6,13 +6,16 @@ import axios from 'axios'
 
 export const useFilms = defineStore('films', () => {
   const films = ref([])
-
   const loadingFilms = ref(true)
   const loadingMovieDetails = ref(true)
+
+  // Для подробной информации о фильме
   const selectedMovie = ref(null)
-  const typeFilms = ref('Now Showing')
+
+  //Поиск
   const homeSearchQuery = ref('')
   const exploreSearchQuery = ref('')
+  const typeFilms = ref('Now Showing')
 
   const getFilms = async () => {
     loadingFilms.value = true

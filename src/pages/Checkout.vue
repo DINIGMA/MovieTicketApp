@@ -1,15 +1,5 @@
 <template>
   <div>
-    <!-- <div class="flex justify-between items-center mb-7">
-      <div
-        class="flex justify-center items-center w-6 h-6 cursor-pointer"
-        @click="emits('goSelectSeat')"
-      >
-        <PrevArrow></PrevArrow>
-      </div>
-      <h2 class="font-semibold text-xl text-center">Checkout</h2>
-      <div></div>
-    </div> -->
     <div v-if="selectedShowtime && selectedSeats.length > 0">
       <div class="mb-12">
         <h2 class="font-semibold text-xl mb-6">Seans info</h2>
@@ -152,9 +142,13 @@ const pay = async () => {
     await paymentImitation()
     if (paymentSuccess.value) {
       await ticketStore.createOrder({
-        userId: JSON.parse(localStorage.getItem('user'))?.id,
-        showtimesId: selectedShowtime.value.id,
-        seats: selectedSeats.value
+        user_id: JSON.parse(localStorage.getItem('user'))?.id,
+        start_time: selectedShowtime.value.start_time,
+        movie_id: selectedShowtime.value.movie_id,
+        hall_id: selectedShowtime.value.hall.id,
+        cinema_id: selectedShowtime.value.cinema.id,
+        seats: selectedSeats.value,
+        paymentDate: new Date()
       })
     }
     isOpenModal.value = true

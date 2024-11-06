@@ -18,7 +18,7 @@
               />
             </div>
             <div class="font-medium">
-              <h3>{{ title }}</h3>
+              <h3 class="ellipsis text-left" :class="width">{{ title }}</h3>
             </div>
             <div>
               <RowRating v-if="isRating" :name="title" :rating="grade" />
@@ -38,7 +38,7 @@ import RowRating from './RowRating.vue'
 import StarReating from './UI-components/StarReating.vue'
 import { Carousel, Slide, Pagination, Navigation } from 'vue3-carousel'
 
-defineProps({
+const props = defineProps({
   films: {
     type: Array,
     required: true
@@ -57,6 +57,12 @@ defineProps({
 <style scoped>
 .carousel__slide {
   justify-content: start;
+}
+
+.ellipsis {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis; /* Чтобы видеть границы контейнера */
 }
 
 ol {

@@ -17,7 +17,8 @@ export default {
         accent: '#F14763',
         accentRed: '#EB5757',
         graySlate: 'rgba(178, 181, 187, 0.7);',
-        darkSlate: 'rgba(27, 30, 37, 0.5);'
+        darkSlate: 'rgba(27, 30, 37, 0.5);',
+        'gray-300': '#717171'
       }
     }
   },
